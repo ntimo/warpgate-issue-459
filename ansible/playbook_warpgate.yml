@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: target_warpgate
   gather_facts: yes
   roles:
     - name: dummy

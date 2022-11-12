@@ -1,0 +1,6 @@
+---
+
+- hosts: target_direct
+  gather_facts: yes
+  roles:
+    - name: dummy

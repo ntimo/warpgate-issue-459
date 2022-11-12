@@ -1,0 +1,6 @@
+---
+
+- hosts: target_jumphost
+  gather_facts: yes
+  roles:
+    - name: dummy
