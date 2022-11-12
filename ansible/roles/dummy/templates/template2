@@ -1,0 +1,3 @@
+{% for sentence in lorem_impresum %}
+{{ sentence }}
+{% endfor %}

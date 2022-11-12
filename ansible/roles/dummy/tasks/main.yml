@@ -1,0 +1,13 @@
+---
+
+- name: Template a dummy file
+  become: yes
+  template:
+    src: template1
+    dest: /root/template1
+
+- name: Template a dummy file
+  become: yes
+  template:
+    src: template2
+    dest: /root/template2

@@ -1,0 +1,5 @@
+---
+
+ansible_port: 2233
+ansible_user: "admin:target"
+ansible_host: "<warpgate_ip_here>"
