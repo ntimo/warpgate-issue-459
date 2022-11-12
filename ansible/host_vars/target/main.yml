@@ -3,3 +3,4 @@
 ansible_port: 2233
 ansible_user: "admin:target"
 ansible_host: "<warpgate_ip_here>"
+ansible_ssh_private_key_file: "/root/.ssh/id_ed25519"
