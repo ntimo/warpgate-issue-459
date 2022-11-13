@@ -1,10 +1,12 @@
+# warpgate-issue-459
+
 ## Setup
 
-# Requirements
+### Requirements
 1. A [Hetzner Cloud](https://www.hetzner.com/cloud) account.
 2. A ssh key
 
-# Setup steps
+### Setup steps
 1. Create 3 servers at Hetzner cloud in the "Nuremburg" region of type cpx11 with Ubuntu 20.04.
     1. Name them ansible, warpgate, target
 2. Connect to the ansible server (via root@ip) and run the following commands:
@@ -15,8 +17,12 @@ pip3 install ansible
 cd /root/
 git clone https://github.com/ntimo/warpgate-issue-459.git warpgate-issue-459
 ```
-3. Fill out the ip of the warpgate vm `/root/warpgate-issue-459/ansible/host_vars/target/main.yml` by replacing "<warpgate_ip_here>" with it.
-4. Generate a ssh key on the Ansible VM with no password using this command
+1. Fill out the host_vars at `/root/warpgate-issue-459/ansible/host_vars/`
+   1. Ip of the warpgate vm `/root/warpgate-issue-459/ansible/host_vars/target_warpgate/main.yml` by replacing "<warpgate_ip_here>" with it.
+   2. Ip of the warpgate vm `/root/warpgate-issue-459/ansible/host_vars/target_jumphost/main.yml` by replacing "<warpgate_server_ip>" with it.
+   3. Ip of the target vm `/root/warpgate-issue-459/ansible/host_vars/target_jumphost/main.yml` by replacing "<target_ip_here>" with it.
+   4. Ip of the target vm `/root/warpgate-issue-459/ansible/host_vars/target_direct/main.yml` by replacing "<target_ip_here>" with it.
+2. Generate a ssh key on the Ansible VM with no password using this command
 ```bash
  ssh-keygen -t ed25519
 ```
@@ -77,11 +83,20 @@ ssh 'admin:target@<warpgate_server_ip>' -p 2233 -i /root/.ssh/id_ed25519
 10. Now on the ansible server run the playbook:
 ```bash
 cd /root/warpgate-issue-459/ansible/
-ansible-playbook playbook.yml --diff
+ansible-playbook playbook_direct.yml --diff
+ansible-playbook playbook_jumphost.yml --diff
+ansible-playbook playbook_warpgate.yml --diff
 ```
 11. Run the playbook a few times in row you should see that the first connection is faster then the next ones. Here is one example:
+    1.  You can also run the playbook automatically a few times by running the tests.sh inside of the ansible directory (this will run each test 50 times and write the times to a `times_*.log` file)
+example result:
 ```bash
 0:00:16.303 *****
 0:00:19.805 *****
 0:00:19.800 *****
 ```
+
+## Results
+The results for an automated run (50 times) for each connection method are located in the results directory.
+results plot:
+![plot](./results/50-runs/plot.png)
